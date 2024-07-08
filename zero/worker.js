@@ -5,10 +5,19 @@ const __MAX_CHAR_COUNT = 1024 * 1024;
 const __output = [];
 let __charCount = 0;
 
+const __stringify = (value) => {
+  switch (typeof value) {
+    case "undefined": return "undefined";
+    case "string": return value;
+    default: return JSON.stringify(value);
+  }
+}
+
 // Built-in function available to be called from `eval`.
 const print = (...args) => {
   for (const arg of args) {
-    const strArg = typeof arg !== "string" ? JSON.stringify(arg) : arg;
+    const strArg = __stringify(arg);
+
     __output.push(strArg);
     __charCount += strArg.length;
 
